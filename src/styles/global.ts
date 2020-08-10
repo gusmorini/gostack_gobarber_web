@@ -20,12 +20,20 @@ export default createGlobalStyle`
     font-size: 16px;
   }
 
-  h1, h2, h3, h4, h5 {
+  h1, h2, h3, h4, h5, strong {
     font-weight: 500;
   }
 
   button {
     cursor: pointer;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  ul {
+    list-style: none;
   }
 
 `;
