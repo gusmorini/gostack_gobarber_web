@@ -6,12 +6,10 @@ import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 import { Container, Content, Background } from "./styles";
 import { useAuth } from "../../hooks/AuthContext";
-
 import getValidationErrors from "../../utils/getValidationErrors";
 
 import Input from "../../components/Input";
 import Button from "../../components/Button";
-
 import logo from "../../assets/logo.svg";
 
 interface SignInFormData {
@@ -22,9 +20,7 @@ interface SignInFormData {
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const { user, signIn } = useAuth();
-
-  console.log(user);
+  const { signIn } = useAuth();
 
   const handleSubmit = useCallback(
     async (data: SignInFormData) => {
@@ -48,8 +44,12 @@ const SignIn: React.FC = () => {
           password: data.password,
         });
       } catch (err) {
-        const errors = getValidationErrors(err);
-        formRef.current?.setErrors(errors);
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+          formRef.current?.setErrors(errors);
+        }
+
+        // disparara toast
       }
     },
     [signIn]
